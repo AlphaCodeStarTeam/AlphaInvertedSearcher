@@ -13,6 +13,8 @@ namespace AlphaInvertedSearcherTest.InvertedMapTest.Utils
         public void TestRealities()
         {
             Assert.True("\f".Equals("" + ((char)12)));
+            Assert.True("\v".Equals("" + ((char)11)));
+            Assert.True("\r".Equals("" + ((char)13)));
         }
         
         [Theory]
