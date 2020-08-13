@@ -36,10 +36,19 @@ namespace AlphaInvertedSearcher.InvertedMap
 
         public string RemoveDoc(string docID)
         {
-            foreach (string keyword in InvertedMap.Keys)
-                InvertedMap[keyword].Remove(docID);
-
-            return Docs.ContainsKey(docID) ? Docs[docID] : "";
+            if (Docs.ContainsKey(docID))
+            {
+                string docContext = Docs[docID];
+                Docs.Remove(docID);
+                foreach (var keyword in InvertedMap.Keys)
+                {
+                    InvertedMap[keyword].Remove(docID);
+                    if (InvertedMap[keyword].Count == 0)
+                        InvertedMap.Remove(keyword);
+                }
+                return docContext;
+            }
+            return "";
         }
 
         public bool RemoveAllDocs(params string[] docIds)

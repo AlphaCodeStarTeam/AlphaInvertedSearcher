@@ -9,43 +9,14 @@ namespace AlphaInvertedSearcherTest.InvertedMapTest
     public class MapHolderTest
     {
         private static readonly string DocsDirectory = "InvertedMapTest\\TestDocs\\";
-        private MapHolder _mapHolder = new MapHolder();
-        
-        [Fact]
-        private void AddDocToMapTest()
+        private static List<string> GetFileNames()
         {
-            var supply = GetAddDocToMapTestSupply();
-            
-            foreach (string fileName in supply.Item1)
-            {
-                _mapHolder.AddDoc(fileName, GetFileContextByName(fileName));
-            }
-            
-            Assert.Equal(supply.Item2, _mapHolder.InvertedMap);
-        }
-
-        private static Tuple<List<string>, Dictionary<string, HashSet<string>>> GetAddDocToMapTestSupply()
-        {
-            List<string> fileNames = new List<string>()
+            return new List<string>()
             {
                 "1.txt",
                 "2.txt",
                 "3.txt"
             };
-            
-            Dictionary<string, HashSet<string>> dictionary = new Dictionary<string, HashSet<string>>()
-            {
-                {"the", new HashSet<string>() {"1.txt", "2.txt"}},
-                {"a", new HashSet<string>() {"1.txt", "2.txt", "3.txt"}},
-                {"witcher", new HashSet<string>() {"1.txt", "2.txt"}},
-                {"is", new HashSet<string>() {"1.txt", "3.txt"}},
-                {"role-playing", new HashSet<string>() {"1.txt", "3.txt"}},
-                {"geralt", new HashSet<string>() {"2.txt"}},
-                {"hunter", new HashSet<string>() {"2.txt", "3.txt"}},
-                {"anya", new HashSet<string>() {"3.txt"}},
-            };
-            
-            return new Tuple<List<string>, Dictionary<string, HashSet<string>>>(fileNames, dictionary);
         }
         
         private static string GetFileContextByName(string fileName)
@@ -63,12 +34,75 @@ namespace AlphaInvertedSearcherTest.InvertedMapTest
 
             return path + "\\";
         }
+        
+        private MapHolder _mapHolder = new MapHolder();
+        
+        [Fact]
+        public void AddDocToMapTest()
+        {
+            InitMapper();
+            Assert.Equal(GetAddDocToMapTestSupply(), _mapHolder.InvertedMap);
+        }
+
+        private Dictionary<string, HashSet<string>> GetAddDocToMapTestSupply()
+        {
+            return new Dictionary<string, HashSet<string>>()
+            {
+                {"the", new HashSet<string>() {"1.txt", "2.txt"}},
+                {"a", new HashSet<string>() {"1.txt", "2.txt", "3.txt"}},
+                {"witcher", new HashSet<string>() {"1.txt", "2.txt"}},
+                {"is", new HashSet<string>() {"1.txt", "3.txt"}},
+                {"role-playing", new HashSet<string>() {"1.txt", "3.txt"}},
+                {"geralt", new HashSet<string>() {"2.txt"}},
+                {"hunter", new HashSet<string>() {"2.txt", "3.txt"}},
+                {"anya", new HashSet<string>() {"3.txt"}},
+            };
+        }
 
 
         [Fact]
-        private void RemoveDocFromMapTest()
+        public void RemoveDocsFromMapTest()
         {
-            
+            InitMapper();
+            dynamic supply = new
+            {
+                Item1 = _mapHolder.Docs, Item2 =  _mapHolder.InvertedMap
+            };
+            Assert.False(_mapHolder.RemoveAllDocs("Baby", "hmm"));
+            Assert.Equal(supply.Item1, _mapHolder.Docs);
+            Assert.Equal(supply.Item2, _mapHolder.InvertedMap);
+            supply = RemoveDocsFromMapTestSupply();
+            Assert.True(_mapHolder.RemoveAllDocs("1.txt", "2.txt"));
+            Assert.Equal(supply.Item1, _mapHolder.Docs);
+            Assert.Equal(supply.Item2, _mapHolder.InvertedMap);
+        }
+
+
+        private  Tuple<Dictionary<string, string>, Dictionary<string, HashSet<string>>>RemoveDocsFromMapTestSupply()
+        {
+            return new Tuple<Dictionary<string, string>, Dictionary<string, HashSet<string>>>(
+                new Dictionary<string, string>()
+                {
+                    {"3.txt", "Anya is a role-playing HUNTER"}
+                }
+                , 
+                new Dictionary<string, HashSet<string>>()
+                    {
+                    {"anya", new HashSet<string>() {"3.txt"}},
+                    {"is", new HashSet<string>() {"3.txt"}},
+                    {"a", new HashSet<string>() {"3.txt"}},
+                    {"role-playing", new HashSet<string>() {"3.txt"}},
+                    {"hunter", new HashSet<string>() {"3.txt"}}
+                    }
+                );
+        }
+        
+        private void InitMapper()
+        {
+            foreach (string fileName in GetFileNames())
+            {
+                _mapHolder.AddDoc(fileName, GetFileContextByName(fileName));
+            }
         }
         
     }
