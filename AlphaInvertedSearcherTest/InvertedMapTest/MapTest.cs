@@ -6,7 +6,7 @@ using Xunit;
 
 namespace AlphaInvertedSearcherTest.InvertedMapTest
 {
-    public class MapHolderTest
+    public class MapTest
     {
         private static readonly string DocsDirectory = "InvertedMapTest\\TestDocs\\";
         private static List<string> GetFileNames()
@@ -35,12 +35,23 @@ namespace AlphaInvertedSearcherTest.InvertedMapTest
             return path + "\\";
         }
         
+        public static Map InitMapper()
+        {
+            Map map = new Map();
+            foreach (string fileName in GetFileNames())
+            {
+                map.AddDoc(fileName, GetFileContextByName(fileName));
+            }
+
+            return map;
+        }
+        
         private Map _map = new Map();
         
         [Fact]
         public void AddDocToMapTest()
         {
-            InitMapper();
+            _map = InitMapper();
             Assert.Equal(GetAddDocToMapTestSupply(), _map.InvertedMap);
         }
 
@@ -63,7 +74,7 @@ namespace AlphaInvertedSearcherTest.InvertedMapTest
         [Fact]
         public void RemoveDocsFromMapTest()
         {
-            InitMapper();
+            _map = InitMapper();
             dynamic supply = new
             {
                 Item1 = _map.Docs, Item2 =  _map.InvertedMap
@@ -96,14 +107,6 @@ namespace AlphaInvertedSearcherTest.InvertedMapTest
                     }
                 );
         }
-        
-        private void InitMapper()
-        {
-            foreach (string fileName in GetFileNames())
-            {
-                _map.AddDoc(fileName, GetFileContextByName(fileName));
-            }
-        }
-        
+
     }
 }

@@ -5,7 +5,7 @@ using AlphaInvertedSearcher.InvertedMap;
 
 namespace AlphaInvertedSearcher.Engine
 {
-    public class MapExtractor
+    public class MapExtractor : IClone<MapExtractor>
     {
         private Map _map;
 
@@ -29,6 +29,11 @@ namespace AlphaInvertedSearcher.Engine
             if(_map.InvertedMap.ContainsKey(keyword))
                 return _map.InvertedMap[keyword].ToList();
             return new List<string>();
+        }
+
+        public MapExtractor Clone()
+        {
+            return new MapExtractor(_map);
         }
     }
     
