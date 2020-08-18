@@ -16,14 +16,14 @@ namespace AlphaInvertedSearcher.Engine
             var executeQuery = _decorate.ExecuteQuery();
             
             //Decorating ExecuteQuery
-            executeQuery = PrintModifiedLines("hello", executeQuery);
-            return ExecuteQuery();
+            executeQuery = PrintModifiedLines(executeQuery);
+            return executeQuery;
         }
         
-        public List<string> PrintModifiedLines(string header, List<string> lines)
+        public List<string> PrintModifiedLines(List<string> lines)
         {
             List<string> answer = new List<string>();
-            answer.Add(header + "\n\n" + lines.Count + " Case(s) Found As Follows:");
+            answer.Add(lines.Count + " Case(s) Found As Follows:");
             if(lines.Count == 0) {
                 answer.Add("No Result Found");
                 return answer;
