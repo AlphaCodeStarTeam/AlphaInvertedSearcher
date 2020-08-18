@@ -6,15 +6,26 @@ using AlphaInvertedSearcher.InvertedMap;
 
 namespace AlphaInvertedSearcher.Engine
 {
-    public class AlphaEngine : IClone<AlphaEngine>
+    public class AlphaEngine : IClone<AlphaEngine>, IDecorate
     {
+        protected IDecorate _decorate;
         private MapExtractor _mapExtractor;
         private SearchQuery _query;
+
+        private AlphaEngine()
+        {
+        }
 
         public AlphaEngine(Map map)
         {
             _mapExtractor = new MapExtractor(map);
             _query = new SearchQuery();
+            _decorate = null;
+        }
+
+        protected AlphaEngine(IDecorate decorate)
+        {
+            _decorate = decorate;
         }
 
         public virtual string GetDocByID(string docID)
@@ -50,7 +61,7 @@ namespace AlphaInvertedSearcher.Engine
             return alphaEngine;
         }
 
-        public List<string> ExecuteQuery()
+        public virtual List<string> ExecuteQuery()
         {
             var result = new ResultSet(_mapExtractor, _query).ExecuteQuery().ToList();
             _query = new SearchQuery();
@@ -70,11 +81,12 @@ namespace AlphaInvertedSearcher.Engine
         
         public AlphaEngine Clone()
         {
-            AlphaEngine alphaEngine = new AlphaEngine(null);
+            AlphaEngine alphaEngine = new AlphaEngine();
             alphaEngine._mapExtractor = _mapExtractor.Clone();
             alphaEngine._query = _query.Clone();
             return alphaEngine;
         }
+        
     }
     
 

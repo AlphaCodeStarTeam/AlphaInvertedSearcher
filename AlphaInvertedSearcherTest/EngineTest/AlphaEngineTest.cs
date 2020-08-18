@@ -42,10 +42,10 @@ namespace AlphaInvertedSearcherTest.EngineTest
         public void ExecuteQueryTest()
         {
             _alphaEngine = new AlphaEngine(_map);
-            AlphaEngine engine = _alphaEngine.AddMustIncludes("The", "WitcheR", "A").AddLeastIncludes("HunTeR", "Bank");
-            AlphaEngine copyEngine = engine.Clone();
-            Assert.Equal(new List<string>(){"1.txt", "2.txt", "3.txt"}, engine.ExecuteQuery());
-            Assert.Equal(new List<string>(){"2.txt"}, copyEngine.AddExcludes("role-playing").ExecuteQuery());
+            AlphaEngine alphaEngine = _alphaEngine.AddMustIncludes("The", "WitcheR", "A").AddLeastIncludes("HunTeR", "Bank");
+            AlphaEngine copyAlphaEngine = alphaEngine.Clone();
+            Assert.Equal(new List<string>(){"1.txt", "2.txt", "3.txt"}, alphaEngine.ExecuteQuery());
+            Assert.Equal(new List<string>(){"2.txt"}, copyAlphaEngine.AddExcludes("role-playing").ExecuteQuery());
         }
         
     }
