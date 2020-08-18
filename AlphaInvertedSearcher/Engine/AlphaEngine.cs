@@ -1,81 +1,66 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using AlphaInvertedSearcher.Engine.Query;
 using AlphaInvertedSearcher.InvertedMap;
 
 namespace AlphaInvertedSearcher.Engine
 {
     public class AlphaEngine
     {
-        private HashSet<string> resultSet = new HashSet<string>();
-        private HashSet<string> norms = new HashSet<string>();
-        private HashSet<string> poss = new HashSet<string>();
-        private HashSet<string> negs = new HashSet<string>();
+        private MapExtractor _mapExtractor;
+        private ResultSet _resultSet;
+        private SearchQuery _query;
 
+        public AlphaEngine(Map map)
+        {
+            _mapExtractor = new MapExtractor(map);
+            _resultSet = new ResultSet(this._mapExtractor);
+            _query = new SearchQuery();
+        }
 
+        public virtual string GetDocByID(string docID)
+        {
+            return _mapExtractor.GetDocById(docID);
+        }
 
         public AlphaEngine AddNorms(params string[] norms)
         {
-            AlphaEngine alphaEngine = this.MemberwiseClone() as AlphaEngine;
-            alphaEngine.norms.UnionWith(norms);
+            AlphaEngine alphaEngine = Cloner.DeepClone(this);
+            alphaEngine._query.norms.UnionWith(norms);
             return alphaEngine;
         }
 
         public AlphaEngine AddPoss(params string[] poss)
         {
-            AlphaEngine alphaEngine = this.MemberwiseClone() as AlphaEngine;
-            alphaEngine.poss.UnionWith(poss);
+            AlphaEngine alphaEngine = Cloner.DeepClone(this);
+            alphaEngine._query.poss.UnionWith(poss);
             return alphaEngine;
         }
 
         public AlphaEngine AddNegs(params string[] negs)
         {
-            AlphaEngine alphaEngine = this.MemberwiseClone() as AlphaEngine;
-            alphaEngine.negs.UnionWith(negs);
+            AlphaEngine alphaEngine = Cloner.DeepClone(this);
+            alphaEngine._query.negs.UnionWith(negs);
+            return alphaEngine;
+        }
+        
+        public AlphaEngine ReconstructMap(Map map)
+        {
+            AlphaEngine alphaEngine = Cloner.DeepClone(this);
+            alphaEngine._mapExtractor = new MapExtractor(map);
             return alphaEngine;
         }
 
         public List<string> ExecuteQuery()
         {
-            //TODO
-            // ModifyResultForNorms(); ModifyResultForPoss(); ModifyResultForNegs();
-            return resultSet.ToList();
-        } 
-        
-        /*private void ModifyResultForNorms() {
-            foreach (string norm in norms)
-                resultSet.UnionWith(GetDocsByKeyword(norm));
-            
-            foreach (var docId in GetAndPrimedSet())
-                resultSet.Remove(docId);
-        }
-
-        private HashSet<string> GetAndPrimedSet() {
-            HashSet<string> hashSetPrime = new HashSet<string>();
-            foreach (string norm in norms)  {
-                HashSet<string> hashSet = new HashSet<string>(resultSet);
-                foreach (var docId in GetDocsByKeyword(norm))
-                    hashSet.Remove(docId);
-                hashSetPrime.UnionWith(hashSet);
-            }
-            return hashSetPrime;
-        }
-
-        private void ModifyResultForPoss() {
-            foreach (string word in poss) {
-                resultSet.UnionWith(GetDocsByKeyword(word));
-            }
+            var result = _resultSet.ExecuteQuery(_query).ToList();
+            _resultSet = new ResultSet(_mapExtractor);
+            _query = new SearchQuery();
+            return result;
         }
         
-        private void ModifyResultForNegs() {
-            foreach (string keyword in negs)
-            {
-                foreach (string docId in GetDocsByKeyword(keyword))
-                {
-                    resultSet.Remove(docId);
-                }
-            }
-        }*/
+        
+
     }
     
 

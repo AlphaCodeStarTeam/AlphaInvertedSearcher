@@ -4,7 +4,7 @@ using AlphaInvertedSearcher.InvertedMap.Utils;
 
 namespace AlphaInvertedSearcher.InvertedMap
 {
-    public class MapHolder
+    public class Map
     {
         public Dictionary<string, HashSet<string>> InvertedMap { get; } = new Dictionary<string, HashSet<string>>();
         public Dictionary<string, string> Docs { get; } = new Dictionary<string, string>();

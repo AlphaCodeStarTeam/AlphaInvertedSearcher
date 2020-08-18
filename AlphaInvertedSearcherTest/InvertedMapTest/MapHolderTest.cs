@@ -35,13 +35,13 @@ namespace AlphaInvertedSearcherTest.InvertedMapTest
             return path + "\\";
         }
         
-        private MapHolder _mapHolder = new MapHolder();
+        private Map _map = new Map();
         
         [Fact]
         public void AddDocToMapTest()
         {
             InitMapper();
-            Assert.Equal(GetAddDocToMapTestSupply(), _mapHolder.InvertedMap);
+            Assert.Equal(GetAddDocToMapTestSupply(), _map.InvertedMap);
         }
 
         private Dictionary<string, HashSet<string>> GetAddDocToMapTestSupply()
@@ -66,15 +66,15 @@ namespace AlphaInvertedSearcherTest.InvertedMapTest
             InitMapper();
             dynamic supply = new
             {
-                Item1 = _mapHolder.Docs, Item2 =  _mapHolder.InvertedMap
+                Item1 = _map.Docs, Item2 =  _map.InvertedMap
             };
-            Assert.False(_mapHolder.RemoveAllDocs("Baby", "hmm"));
-            Assert.Equal(supply.Item1, _mapHolder.Docs);
-            Assert.Equal(supply.Item2, _mapHolder.InvertedMap);
+            Assert.False(_map.RemoveAllDocs("Baby", "hmm"));
+            Assert.Equal(supply.Item1, _map.Docs);
+            Assert.Equal(supply.Item2, _map.InvertedMap);
             supply = RemoveDocsFromMapTestSupply();
-            Assert.True(_mapHolder.RemoveAllDocs("1.txt", "2.txt"));
-            Assert.Equal(supply.Item1, _mapHolder.Docs);
-            Assert.Equal(supply.Item2, _mapHolder.InvertedMap);
+            Assert.True(_map.RemoveAllDocs("1.txt", "2.txt"));
+            Assert.Equal(supply.Item1, _map.Docs);
+            Assert.Equal(supply.Item2, _map.InvertedMap);
         }
 
 
@@ -101,7 +101,7 @@ namespace AlphaInvertedSearcherTest.InvertedMapTest
         {
             foreach (string fileName in GetFileNames())
             {
-                _mapHolder.AddDoc(fileName, GetFileContextByName(fileName));
+                _map.AddDoc(fileName, GetFileContextByName(fileName));
             }
         }
         
