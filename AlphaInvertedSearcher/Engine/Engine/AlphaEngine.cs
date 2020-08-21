@@ -6,9 +6,9 @@ using AlphaInvertedSearcher.InvertedMap;
 
 namespace AlphaInvertedSearcher.Engine
 {
-    public class AlphaEngine : IClone<AlphaEngine>, IDecorate
+    public class AlphaEngine : IClone<AlphaEngine>
     {
-        protected IDecorate _decorate;
+        protected AlphaEngine _decorate;
         private MapExtractor _mapExtractor;
         private SearchQuery _query;
 
@@ -23,9 +23,14 @@ namespace AlphaInvertedSearcher.Engine
             _decorate = null;
         }
 
-        protected AlphaEngine(IDecorate decorate)
+        protected AlphaEngine(AlphaEngine decorate)
         {
             _decorate = decorate;
+        }
+
+        protected virtual AlphaEngine CreateThisEngine(AlphaEngine decorate)
+        {
+            return new AlphaEngine(decorate);
         }
 
         public virtual string GetDocByID(string docID)
@@ -35,30 +40,50 @@ namespace AlphaInvertedSearcher.Engine
 
         public AlphaEngine AddMustIncludes(params string[] norms)
         {
-            AlphaEngine alphaEngine = Clone();
-            alphaEngine._query.norms.UnionWith(ArrayToLowerHashSet(norms));
-            return alphaEngine;
+            if (_decorate == null)
+            {
+                AlphaEngine alphaEngine = Clone();
+                alphaEngine._query.norms.UnionWith(ArrayToLowerHashSet(norms));
+                return alphaEngine;
+            }
+            
+            return CreateThisEngine(_decorate.AddMustIncludes(norms));
         }
 
         public AlphaEngine AddLeastIncludes(params string[] poss)
         {
-            AlphaEngine alphaEngine = Clone();
-            alphaEngine._query.poss.UnionWith(ArrayToLowerHashSet(poss));
-            return alphaEngine;
+            if (_decorate == null)
+            {
+                AlphaEngine alphaEngine = Clone();
+                alphaEngine._query.poss.UnionWith(ArrayToLowerHashSet(poss));
+                return alphaEngine; 
+            }
+            
+            return CreateThisEngine(_decorate.AddLeastIncludes(poss));
         }
 
         public AlphaEngine AddExcludes(params string[] negs)
         {
-            AlphaEngine alphaEngine = Clone();
-            alphaEngine._query.negs.UnionWith(ArrayToLowerHashSet(negs));
-            return alphaEngine;
+            if (_decorate == null)
+            {
+                AlphaEngine alphaEngine = Clone();
+                alphaEngine._query.negs.UnionWith(ArrayToLowerHashSet(negs));
+                return alphaEngine;  
+            }
+
+            return CreateThisEngine(_decorate.AddExcludes(negs));
         }
         
         public AlphaEngine ReconstructMap(Map map)
         {
-            AlphaEngine alphaEngine = Clone();
-            alphaEngine._mapExtractor = new MapExtractor(map);
-            return alphaEngine;
+            if (_decorate == null)
+            {
+                AlphaEngine alphaEngine = Clone();
+                alphaEngine._mapExtractor = new MapExtractor(map);
+                return alphaEngine;
+            }
+
+            return CreateThisEngine(_decorate.ReconstructMap(map));
         }
 
         public virtual List<string> ExecuteQuery()

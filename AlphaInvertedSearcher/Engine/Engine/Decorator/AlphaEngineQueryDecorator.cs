@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using AlphaInvertedSearcher.InvertedMap;
 
 namespace AlphaInvertedSearcher.Engine
 {
@@ -6,9 +7,14 @@ namespace AlphaInvertedSearcher.Engine
     {
         private int board;
 
-        public AlphaEngineQueryDecorator(IDecorate decorate, int board) : base(decorate)
+        public AlphaEngineQueryDecorator(AlphaEngine decorate, int board) : base(decorate)
         {
             this.board = board;
+        }
+        
+        protected override AlphaEngine CreateThisEngine(AlphaEngine decorate)
+        {
+            return new AlphaEngineQueryDecorator(decorate, board);
         }
 
         public override List<string> ExecuteQuery()

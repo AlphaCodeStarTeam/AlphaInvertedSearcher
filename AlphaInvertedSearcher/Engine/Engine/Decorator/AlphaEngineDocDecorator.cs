@@ -4,9 +4,14 @@
     {
         private int board;
 
-        public AlphaEngineDocDecorator(IDecorate decorate, int board) : base(decorate)
+        public AlphaEngineDocDecorator(AlphaEngine decorate, int board) : base(decorate)
         {
             this.board = board;
+        }
+
+        protected override AlphaEngine CreateThisEngine(AlphaEngine decorate)
+        {
+            return new AlphaEngineDocDecorator(decorate, board);
         }
 
         public override string GetDocByID(string docID)
