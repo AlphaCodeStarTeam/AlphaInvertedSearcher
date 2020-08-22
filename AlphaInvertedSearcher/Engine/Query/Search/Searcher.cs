@@ -6,7 +6,6 @@ namespace AlphaInvertedSearcher.Engine.Query
     {
 
         private void ModifyResultForNorms(ResultSet resultSet, MapExtractor mapExtractor) {
-            
             foreach (string norm in resultSet.Query.norms)
                 resultSet.Result.UnionWith(mapExtractor.GetDocsByKeyword(norm));
 

@@ -11,7 +11,7 @@ namespace AlphaInvertedSearcher.Engine
         protected AlphaEngine _decorate;
         private MapExtractor _mapExtractor;
         private SearchQuery _query;
-
+        
         private AlphaEngine()
         {
         }
@@ -53,7 +53,7 @@ namespace AlphaInvertedSearcher.Engine
             {
                 AlphaEngine alphaEngine = Clone();
                 alphaEngine._query.poss.UnionWith(ArrayToLowerHashSet(poss));
-                return alphaEngine; 
+                return alphaEngine;
             }
             
             return CreateThisEngine(_decorate.AddLeastIncludes(poss));
