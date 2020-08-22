@@ -1,4 +1,6 @@
-﻿namespace AlphaInvertedSearcher.Engine
+﻿using System.Collections.Generic;
+
+namespace AlphaInvertedSearcher.Engine
 {
     public class AlphaEngineDocDecorator : AlphaEngine
     {
@@ -9,10 +11,10 @@
             this.board = board;
         }
 
-        protected override AlphaEngine CreateThisEngine(AlphaEngine decorate)
-        {
-            return new AlphaEngineDocDecorator(decorate, board);
-        }
+        protected override AlphaEngine CreateThisEngine(AlphaEngine decorate) => 
+            new AlphaEngineDocDecorator(decorate, board);
+
+        public override List<string> ExecuteQuery() => _decorate.ExecuteQuery();
 
         public override string GetDocByID(string docID)
         {
@@ -25,6 +27,7 @@
         
         private string PrintModifiedWords(string header, string context) {
             string answer = header + " Summery: \n";
+            int board = this.board;
             for (int i = 0; i < context.ToCharArray().Length; i++) {
                 if(context[i] == ' ') {
                     board--;

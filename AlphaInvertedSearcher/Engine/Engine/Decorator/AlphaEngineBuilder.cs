@@ -8,16 +8,18 @@ namespace AlphaInvertedSearcher.Engine
         private bool _isDocSummerized = false, isQueryPretty = false;
         private int summerizedDocBoard, prettyQueryBoard;
 
-        public void SetSummarizedDoc(int board = 15)
+        public AlphaEngineBuilder SetSummarizedDoc(int board = 15)
         {
             summerizedDocBoard = board;
             _isDocSummerized = true;
+            return this;
         }
 
-        public void SetPrettyQuery(int board = Int32.MaxValue)
+        public AlphaEngineBuilder SetPrettyQuery(int board = Int32.MaxValue)
         {
             isQueryPretty = true;
             prettyQueryBoard = board;
+            return this;
         }
 
         public AlphaEngine Create(Map map)

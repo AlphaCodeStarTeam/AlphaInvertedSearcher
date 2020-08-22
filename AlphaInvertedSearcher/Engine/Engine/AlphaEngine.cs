@@ -28,10 +28,7 @@ namespace AlphaInvertedSearcher.Engine
             _decorate = decorate;
         }
 
-        protected virtual AlphaEngine CreateThisEngine(AlphaEngine decorate)
-        {
-            return new AlphaEngine(decorate);
-        }
+        protected virtual AlphaEngine CreateThisEngine(AlphaEngine decorate) => new AlphaEngine(decorate);
 
         public virtual string GetDocByID(string docID)
         {

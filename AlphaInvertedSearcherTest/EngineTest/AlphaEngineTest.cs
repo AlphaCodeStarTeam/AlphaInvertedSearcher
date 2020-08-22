@@ -47,6 +47,21 @@ namespace AlphaInvertedSearcherTest.EngineTest
             Assert.Equal(new List<string>(){"1.txt", "2.txt", "3.txt"}, alphaEngine.ExecuteQuery());
             Assert.Equal(new List<string>(){"2.txt"}, copyAlphaEngine.AddExcludes("role-playing").ExecuteQuery());
         }
+
+        [Fact]
+        public void DocumentNotFoundException()
+        {
+            _alphaEngine = new AlphaEngine(_map);
+            Assert.Throws<DocumentNotFoundException>(() => _alphaEngine.GetDocByID("Hello"));
+            try
+            {
+                _alphaEngine.GetDocByID("Hello");
+            }
+            catch (DocumentNotFoundException e)
+            {
+                Assert.Equal("You Haven't Added Document With Such Name Yet", e.Message);
+            }
+        }
         
     }
 }
