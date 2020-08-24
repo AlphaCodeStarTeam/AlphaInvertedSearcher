@@ -7,7 +7,6 @@ namespace AlphaApplication.Application
     {
         private readonly Tuple<string, ConsoleColor> ApplicationIntro;
         private readonly Tuple<string, ConsoleColor> ApplicationRun;
-        private readonly Tuple<string, ConsoleColor> ApplicationHelp;
         private readonly Tuple<string, ConsoleColor> ApplicationExit;
 
 
@@ -17,14 +16,12 @@ namespace AlphaApplication.Application
         
         
         protected App(Tuple<string, ConsoleColor> applicationIntro, 
-            Tuple<string, ConsoleColor> applicationRun, 
-            Tuple<string, ConsoleColor> applicationHelp, 
+            Tuple<string, ConsoleColor> applicationRun,
             Tuple<string, ConsoleColor> applicationExit)
         {
             ApplicationRun = applicationRun;
             ApplicationExit = applicationExit;
             ApplicationIntro = applicationIntro;
-            ApplicationHelp = applicationHelp;
             
             SayHello();
             InitExecutors();
@@ -54,21 +51,10 @@ namespace AlphaApplication.Application
                 }
             }
         }
-
+        
         protected void SayHello()
         {
             PrintWithDesign(ApplicationIntro.Item1, true, DefaultBackGroundColor, ApplicationIntro.Item2);
-        }
-
-
-        protected void ShowHelp()
-        {
-            PrintWithDesign(ApplicationHelp.Item1, true, DefaultBackGroundColor, ApplicationHelp.Item2);
-        }
-        
-        private void Exit()
-        {
-            throw new ExitException();
         }
 
         protected void PrintWithDesign(string text, bool isLine, ConsoleColor backGroundColor , ConsoleColor foreGroundColor)
