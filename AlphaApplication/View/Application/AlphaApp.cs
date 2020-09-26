@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using AlphaApplication.Control;
 using AlphaInvertedSearcher.Engine;
 
@@ -36,10 +37,11 @@ namespace AlphaApplication.Application
         protected override void InitExecutors()
         {
             Executors.Add("^search( \\S+)+$", args => Search(args));
+            Executors.Add("^view doc (\\S+){1,20}$", args => ViewDoc(args));
+            Executors.Add("^view doc (\\S+){1,20}( #all)$", args => ViewDoc(args));
             Executors.Add("^show help$", args => ShowHelp());
             Executors.Add("^exit$", args => Exit());
         }
-
 
         private void ShowHelp()
         {
@@ -58,6 +60,27 @@ namespace AlphaApplication.Application
             result.Skip(1).ToList().ForEach(line => 
                 PrintWithDesign(line, true, DefaultBackGroundColor, ContextColor));
             Console.WriteLine();
+        }
+        
+        private void ViewDoc(string[] args)
+        {
+            var result = _alphaController.ViewDoc(args);
+            var splits = result.Split("\n");
+            PrintWithDesign(splits[0], true, DefaultBackGroundColor, HeaderColor);
+            var builder = new StringBuilder();
+            for (int i = 1; i < splits.Length; i++)
+            {
+                builder.Append(splits[i] + "\n");
+            }
+
+            if (!builder.ToString().Equals("\n"))
+            {
+                PrintWithDesign(builder.ToString(), true, DefaultBackGroundColor, ContextColor);
+            }
+            else
+            {
+                Console.WriteLine();
+            }
         }
         
     }

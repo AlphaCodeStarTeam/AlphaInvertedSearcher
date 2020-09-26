@@ -17,8 +17,4 @@
       <ProjectReference Include="..\AlphaApplication\AlphaApplication.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="ViewTest\Utils" />
-    </ItemGroup>
-
 </Project>

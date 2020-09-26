@@ -22,30 +22,15 @@ namespace AlphaApplication.Control
 
         public List<string> Search(string[] strings)
         {
-            var newStrings = CreateAlphaEngine(strings).ToList();
+            /*
+            var newStrings = InitAlphaEngine(strings).ToList();
             foreach (var newString in newStrings)
             {
                 AddWord(newString.Trim());
             }
-
-            int x = 6;
-            // CreateAlphaEngine(strings).ToList().ForEach(word => AddWord(word));
+            */
+            InitAlphaEngine(strings).ToList().ForEach(word => AddWord(word.Trim()));
             return _alphaEngine.ExecuteQuery();
-        }
-
-        private string[] CreateAlphaEngine(string[] strings)
-        {
-            AlphaEngineBuilder alphaEngineBuilder = new AlphaEngineBuilder();
-            if (strings[^1].Equals(" #all"))
-            {
-                alphaEngineBuilder.SetPrettyQuery();
-                strings = strings.Take(strings.Length - 1).ToArray();
-            }
-            else
-                alphaEngineBuilder.SetPrettyQuery(ExecuteQueryBoard);
-
-            _alphaEngine = alphaEngineBuilder.Create(_map);
-            return strings;
         }
 
         private void AddWord(string word)
@@ -62,6 +47,41 @@ namespace AlphaApplication.Control
                     _alphaEngine = _alphaEngine.AddMustIncludes(word);
                     break;
             }
+        }
+
+        public string ViewDoc(string[] strings)
+        {
+            var isComplete = (strings.Length == 2);
+            var docId = InitAlphaEngine(strings)[0];
+            try
+            {
+                if (isComplete)
+                {
+                    var docContext = _alphaEngine.GetDocByID(docId);
+                    return "Doc <"+ docId + ">: " +"\n" + docContext;
+                }
+                return _alphaEngine.GetDocByID(docId);
+            }
+            catch (DocumentNotFoundException e)
+            {
+                return "!Document Not Found!\n";
+            }
+        }
+        
+        private string[] InitAlphaEngine(string[] strings)
+        {
+            AlphaEngineBuilder alphaEngineBuilder = new AlphaEngineBuilder();
+            if (strings[^1].Equals(" #all"))
+            {
+                alphaEngineBuilder.SetPrettyQuery();
+                strings = strings.Take(strings.Length - 1).ToArray();
+            }
+            else
+            {
+                alphaEngineBuilder.SetPrettyQuery(ExecuteQueryBoard).SetSummarizedDoc();
+            }
+            _alphaEngine = alphaEngineBuilder.Create(_map);
+            return strings;
         }
     }
 }

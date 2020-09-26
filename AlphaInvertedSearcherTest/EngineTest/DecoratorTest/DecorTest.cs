@@ -23,7 +23,7 @@ namespace AlphaInvertedSearcherTest.EngineTest.DecoratorTest
         {
             var alphaEngine = _engineBuilder.SetSummarizedDoc(2).Create(MapTest.InitMapper());
             Assert.NotEqual("The Witcher is a role-playing", alphaEngine.GetDocByID("1.txt"));
-            Assert.Equal("1.txt Summery: \nThe Witcher...", alphaEngine.GetDocByID("1.txt"));
+            Assert.Equal("Doc <1.txt> Summary: \nThe Witcher...", alphaEngine.GetDocByID("1.txt"));
             var resultSet = alphaEngine.AddMustIncludes("Witcher").AddMustIncludes("WiTchEr", "is").AddLeastIncludes("AnyA")
                 .AddExcludes("role-playing").ExecuteQuery();
             Assert.Equal(new List<string>(), resultSet);
@@ -45,7 +45,7 @@ namespace AlphaInvertedSearcherTest.EngineTest.DecoratorTest
         public void EngineBuilderTest4()
         {
             var alphaEngine = _engineBuilder.SetPrettyQuery(1).SetSummarizedDoc(2).Create(MapTest.InitMapper());
-            Assert.Equal("1.txt Summery: \nThe Witcher...", alphaEngine.GetDocByID("1.txt"));
+            Assert.Equal("Doc <1.txt> Summary: \nThe Witcher...", alphaEngine.GetDocByID("1.txt"));
             var resultSet = alphaEngine.AddLeastIncludes("WitCHER", "aNyA").ExecuteQuery();
             Assert.Equal(new List<string>()
             {

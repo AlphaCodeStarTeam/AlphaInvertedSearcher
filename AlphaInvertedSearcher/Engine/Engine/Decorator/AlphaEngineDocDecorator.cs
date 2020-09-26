@@ -26,7 +26,7 @@ namespace AlphaInvertedSearcher.Engine
         }
         
         private string PrintModifiedWords(string header, string context) {
-            string answer = header + " Summery: \n";
+            string answer = "Doc <"+ header + "> Summary: \n";
             int board = this.board;
             for (int i = 0; i < context.ToCharArray().Length; i++) {
                 if(context[i] == ' ') {

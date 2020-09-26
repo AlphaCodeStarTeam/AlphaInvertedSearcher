@@ -31,11 +31,13 @@ namespace AlphaApplication.Application
 
         private static string[] GetParameters(GroupCollection groupCollection)
         {
-            return groupCollection[1]
-                .Captures
-                .ToList()
-                .Select(capture => capture.ToString())
-                .ToArray();
+            var parameters = new List<string>();
+            for (int i = 1; i < groupCollection.Count; i++)
+            {
+                parameters.AddRange(groupCollection[i].Captures.ToList().Select(capture => capture.ToString()).ToList());
+            }
+
+            return parameters.ToArray();
         }
     }
 
