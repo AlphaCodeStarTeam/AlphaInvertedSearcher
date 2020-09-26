@@ -5,7 +5,7 @@ namespace AlphaApplication
 {
     class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             App app = new AlphaApp();
             app.run();

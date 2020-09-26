@@ -15,7 +15,7 @@ namespace AlphaInvertedSearcher.Engine
             return this;
         }
 
-        public AlphaEngineBuilder SetPrettyQuery(int board = Int32.MaxValue)
+        public AlphaEngineBuilder SetPrettyQuery(int board = (Int32.MaxValue - 10))
         {
             isQueryPretty = true;
             prettyQueryBoard = board;

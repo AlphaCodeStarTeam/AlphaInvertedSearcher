@@ -27,6 +27,8 @@ namespace AlphaApplication.Control
             {
                 AddWord(newString.Trim());
             }
+
+            int x = 6;
             // CreateAlphaEngine(strings).ToList().ForEach(word => AddWord(word));
             return _alphaEngine.ExecuteQuery();
         }
@@ -34,7 +36,7 @@ namespace AlphaApplication.Control
         private string[] CreateAlphaEngine(string[] strings)
         {
             AlphaEngineBuilder alphaEngineBuilder = new AlphaEngineBuilder();
-            if (strings[^1].Equals("#all"))
+            if (strings[^1].Equals(" #all"))
             {
                 alphaEngineBuilder.SetPrettyQuery();
                 strings = strings.Take(strings.Length - 1).ToArray();
