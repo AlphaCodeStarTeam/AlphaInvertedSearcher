@@ -21,8 +21,20 @@ namespace AlphaApplicationTest.ViewTest
             
             AlphaApp alphaApp = new AlphaApp();
             alphaApp.run();
-            
-            Assert.Equal("Fuck", mockedOut.ToString());
+            var expected = "Hello, This Is " + "Alpha-Avg" +  "." + 
+                           "\n*-Enter <show help> to see the guidance-*" + "\n\n" +
+                           "Alpha-Avg> " +
+                           "7 Case(s) Found As Follows:\n" +
+                           "\tDoc1: 58077\n" +
+                           "\tDoc2: 58814\n" +
+                           "\tDoc3: 59134\n" +
+                           "\t\t.\n" +
+                           "\t\t.\n" +
+                           "\t\t.\n" +
+                           "\tDoc7: 59615\n\r\n" +
+                           "Alpha-Avg> " +
+                           "AlphaTeam Appreciates Your Usage. GoodBye \n\n";
+            Assert.Equal(expected, mockedOut.ToString());
         }
     }
 }

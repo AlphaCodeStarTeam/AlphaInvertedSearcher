@@ -14,17 +14,15 @@ namespace AlphaApplication.Application
             internal static readonly Tuple<string, ConsoleColor> AlphaRun = new Tuple<string, ConsoleColor>("Alpha-Avg", ConsoleColor.Magenta);
             
             internal static readonly Tuple<string, ConsoleColor> AlphaIntro = new Tuple<string, ConsoleColor>("Hello, This Is " + AlphaRun.Item1 + "." +
-                                                                                                              "\nHow Can We Help You?" +
+                                                                                                              "\n*-Enter <show help> to see the guidance-*" +
                                                                                                               "\n", ConsoleColor.DarkCyan);
             
             internal static readonly Tuple<String, ConsoleColor> AlphaHelp = new Tuple<string, ConsoleColor>("-* Commands(IgnoreCase): \n" +
-                                                                                                             "-> show (FirstName) (LastName) average \n" +
-                                                                                                             "-> show (FirstName) (LastName) scores \n" +
-                                                                                                             "-> show rankings (-Number) \n" +
+                                                                                                             "-> search <must include> <+includes> <-excludes> (e.g. search stack ram data +software +engineer -hardware)\n" +
                                                                                                              "-> show help \n" +
-                                                                                                             "-> exit", ConsoleColor.DarkGreen);
+                                                                                                             "-> exit \n", ConsoleColor.DarkGreen);
 
-            internal static readonly Tuple<string, ConsoleColor> AlphaExit = new Tuple<string, ConsoleColor>("AlphaTeam Appreciates Your Usage. GoodBye", ConsoleColor.Black);
+            internal static readonly Tuple<string, ConsoleColor> AlphaExit = new Tuple<string, ConsoleColor>("AlphaTeam Appreciates Your Usage. GoodBye \n", ConsoleColor.Black);
         }
         
         private static readonly ConsoleColor HeaderColor = ConsoleColor.DarkYellow;
@@ -37,9 +35,9 @@ namespace AlphaApplication.Application
 
         protected override void InitExecutors()
         {
+            Executors.Add("^search( \\S+)+$", args => Search(args));
             Executors.Add("^show help$", args => ShowHelp());
             Executors.Add("^exit$", args => Exit());
-            Executors.Add("^search( \\S+)+$", args => Search(args));
         }
 
 
@@ -59,6 +57,7 @@ namespace AlphaApplication.Application
             PrintWithDesign(result[0], true, DefaultBackGroundColor, HeaderColor);
             result.Skip(1).ToList().ForEach(line => 
                 PrintWithDesign(line, true, DefaultBackGroundColor, ContextColor));
+            Console.WriteLine();
         }
         
     }

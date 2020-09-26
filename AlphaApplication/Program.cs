@@ -1,4 +1,5 @@
 ﻿using System;
+using AlphaApplication.Application;
 
 namespace AlphaApplication
 {
@@ -6,7 +7,8 @@ namespace AlphaApplication
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            App app = new AlphaApp();
+            app.run();
         }
     }
 }

@@ -22,7 +22,12 @@ namespace AlphaApplication.Control
 
         public List<string> Search(string[] strings)
         {
-            CreateAlphaEngine(strings).ToList().ForEach(word => AddWord(word));
+            var newStrings = CreateAlphaEngine(strings).ToList();
+            foreach (var newString in newStrings)
+            {
+                AddWord(newString.Trim());
+            }
+            // CreateAlphaEngine(strings).ToList().ForEach(word => AddWord(word));
             return _alphaEngine.ExecuteQuery();
         }
 
@@ -43,20 +48,18 @@ namespace AlphaApplication.Control
 
         private void AddWord(string word)
         {
-            word = word.Trim();
             char starter = word[0];
             switch (starter) {
                 case '+':
-                    _alphaEngine.AddLeastIncludes(word.Substring(1));
+                    _alphaEngine = _alphaEngine.AddLeastIncludes(word.Substring(1));
                     break;
                 case '-':
-                    _alphaEngine.AddExcludes(word.Substring(1));
+                    _alphaEngine = _alphaEngine.AddExcludes(word.Substring(1));
                     break;
                 default:
-                    _alphaEngine.AddMustIncludes(word);
+                    _alphaEngine = _alphaEngine.AddMustIncludes(word);
                     break;
             }
         }
-        
     }
 }

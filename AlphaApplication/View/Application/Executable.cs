@@ -31,10 +31,10 @@ namespace AlphaApplication.Application
 
         private static string[] GetParameters(GroupCollection groupCollection)
         {
-            return groupCollection
-                .Values
-                .Skip(1)
-                .Select(group => group.Value)
+            return groupCollection[1]
+                .Captures
+                .ToList()
+                .Select(capture => capture.ToString())
                 .ToArray();
         }
     }
