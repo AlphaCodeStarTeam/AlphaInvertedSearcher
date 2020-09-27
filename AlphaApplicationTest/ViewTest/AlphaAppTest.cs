@@ -100,7 +100,7 @@ namespace AlphaApplicationTest.ViewTest
         [Fact]
         public void ViewDocNotFoundTest() {
                 var output = getOutputFromInput("view doc abc #all\nexit\n");
-                var expected = "Hello, This Is " + "Alpha-Inverted-Searcher" +  "." + 
+                var expected = "Hello, This Is " + "Alpha-Inverted-Searcherx" +  "." + 
                                "\n*-Enter <show help> to see the guidance-*" + "\n\n" +
                                "Alpha-Inverted-Searcher> " +
                                "!Document Not Found!\n\r\n" +
