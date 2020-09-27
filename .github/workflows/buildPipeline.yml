@@ -25,6 +25,6 @@ jobs:
       - name: Publish code coverage reports to codecove.io
         uses: codecov/codecov-action@v1
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+          token: 9f36d613-6c84-43c8-94cd-88d7febe2c6d
           files: ./**/coverage.cobertura.xml
           fail_ci_if_error: true
