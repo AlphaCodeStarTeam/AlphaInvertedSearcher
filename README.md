@@ -1,5 +1,5 @@
 # Alpha-Inverted-Searcher
-![Contributors](https://img.shields.io/github/contributors/AlphaCodeStarTeam/AlphaInvertedSearcher?style=flat-square)
+![BuildStatus](https://img.shields.io/github/workflow/status/AlphaCodeStarTeam/AlphaInvertedSearcher/build?style=flat-square) ![Contributors](https://img.shields.io/github/contributors/AlphaCodeStarTeam/AlphaInvertedSearcher?style=flat-square)
 
 Hi! This is Alpha Team speaking. The following is a quick review of what we did for our C# Inverted-Index Search Engine and what you can expect while checking our project.
 This project is result of using lots of caffeine, sleepless nights and a lot of efforts from:
