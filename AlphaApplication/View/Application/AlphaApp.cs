@@ -37,8 +37,8 @@ namespace AlphaApplication.Application
         protected override void InitExecutors()
         {
             Executors.Add("^search( \\S+)+$", args => Search(args));
-            Executors.Add("^view doc (\\S+){1,20}$", args => ViewDoc(args));
-            Executors.Add("^view doc (\\S+){1,20}( #all)$", args => ViewDoc(args));
+            Executors.Add("^view doc (\\S+){1,50}$", args => ViewDoc(args));
+            Executors.Add("^view doc (\\S+){1,50}( #all)$", args => ViewDoc(args));
             Executors.Add("^show help$", args => ShowHelp());
             Executors.Add("^exit$", args => Exit());
         }
