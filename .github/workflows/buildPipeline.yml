@@ -15,10 +15,10 @@ jobs:
           dotnet-version: 3.1.301
       - name: Install dependencies
         run: dotnet restore
-        working-directory: AlphaApplication
+        working-directory: AlphaInvertedSearcher
       - name: Build
         run: dotnet build --configuration Release --no-restore
-        working-directory: AlphaApplication
+        working-directory: AlphaInvertedSearcher
       - name: Test
         run: dotnet test --no-restore --verbosity normal --collect:"XPlat Code Coverage"
-        working-directory: AlphaApplication
+        working-directory: AlphaInvertedSearcher
