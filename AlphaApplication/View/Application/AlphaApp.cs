@@ -12,7 +12,7 @@ namespace AlphaApplication.Application
     {
         public static class AlphaDesign
         {
-            internal static readonly Tuple<string, ConsoleColor> AlphaRun = new Tuple<string, ConsoleColor>("Alpha-Avg", ConsoleColor.Magenta);
+            internal static readonly Tuple<string, ConsoleColor> AlphaRun = new Tuple<string, ConsoleColor>("Alpha-Inverted-Searcher", ConsoleColor.Magenta);
             
             internal static readonly Tuple<string, ConsoleColor> AlphaIntro = new Tuple<string, ConsoleColor>("Hello, This Is " + AlphaRun.Item1 + "." +
                                                                                                               "\n*-Enter <show help> to see the guidance-*" +
